@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Scrabble Word</title>
+	<link rel="stylesheet" type="text/css" href="scrabble.css">
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js" > </script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+				$("#submit").click(calc);
+
+			})
+		function calc(){
+
+			var txt ="";
+
+			/* get what radio button is checked, google to find how*/
+			/* if any was checked */
+
+			if(document.getElementById("begin").checked){
+			txt = "/^"+$("#pattern").val()+"/";
+		}
+			/* if begin was checked */
+			else if(document.getElementById("end").checked){
+			txt = "/^.*"+$("#pattern").val()+"\\r$/m";
+		}
+
+			/* if end was checked * what should we do */
+			else{
+			txt = "/"+$("#pattern").val()+"/";
+		}
+			/* complete the above , you are done */
+			$.ajax({
+				url:"scrabble.php",
+				data:{
+					pattern: txt,
+
+				},
+				success: function(response){
+					console.log(pattern);
+			
+
+					$("#outputDiv").html(response);
+				}
+			})
+		}
+		</script>
+		
+</head>
+<body>
+	<form action="" required>
+  	<input type="radio" name="time" id="begin"> Begin<br>
+  	<input type="radio" name="time" id="any"> Any<br>
+  	<input type="radio" name="time" id="end"> End<br>
+  	</form>
+	String pattern: <input type=text value="pattern" id='pattern'  >
+	<button id="submit" >Submit</button>
+	<div class="output" id="outputDiv"></div>
+</body>
+</html>
